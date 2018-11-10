@@ -1,0 +1,44 @@
+{
+  "name": "melements",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config ./webpack/webpack.prod.js",
+    "serve:dev": "webpack-dev-server --config ./webpack/webpack.dev.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kdebczynski/mElements.git"
+  },
+  "author": "Krzysztof Debczynski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kdebczynski/mElements/issues"
+  },
+  "homepage": "https://github.com/kdebczynski/mElements#readme",
+  "dependencies": {
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.5",
+    "@babel/node": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.1",
+    "file-loader": "^2.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.10.0",
+    "path": "^0.12.7",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
+    "webpack-merge": "^4.1.4"
+  }
+}
