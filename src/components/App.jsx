@@ -1,17 +1,16 @@
 import React from "react";
 import {
     BrowserRouter as Router,
-    Route,
-    Link
+    Route
 } from 'react-router-dom';
-import Main from "./pages/Main";
-import SearchResults from "./pages/SearchResults";
+import Main from "./pages/main/Main";
+import SearchResults from "./pages/searchResults/SearchResults";
 import "css/global.scss";
 
 const App = () => {
     return (
         <Router>
-            <div className="container">
+            <div>
                 <Route exact path="/" component={ Main } />
                 <Route path="/results" component={ SearchResults } />
             </div>
