@@ -6,9 +6,7 @@ import Content from "components/content/Content";
 const SearchResults = () => {
     return (
         <div>
-            <Header
-                title="Search Results"
-            />
+            <Header title="Search Results" />
             <Content>
                 <Link to="/">Main</Link>
             </Content>

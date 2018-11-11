@@ -3,7 +3,7 @@ import {
     BrowserRouter as Router,
     Route
 } from 'react-router-dom';
-import Main from "./pages/main/Main";
+import Main from "./pages/main/MainContainer";
 import SearchResults from "./pages/searchResults/SearchResults";
 import "css/global.scss";
 

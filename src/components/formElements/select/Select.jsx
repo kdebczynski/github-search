@@ -21,7 +21,16 @@ const renderEmptyOption = ({ value = "", name = "None" } = {}) => {
     );
 }
 
-const Select = ({ id = "", name = "", selectedValue = "", shouldRenderEmptyOption = true, options, onChange, ...props }) => {
+const Select = ({
+    id = "",
+    name = "",
+    selectedValue = "",
+    shouldRenderEmptyOption = true,
+    emptyOption = { value: "", name: "None" },
+    options,
+    onChange,
+    ...props
+}) => {
     return (
         <MaterialSelect
             value={ selectedValue }
@@ -30,7 +39,7 @@ const Select = ({ id = "", name = "", selectedValue = "", shouldRenderEmptyOptio
             displayEmpty={ shouldRenderEmptyOption }
             { ...props }
         >
-            { shouldRenderEmptyOption && renderEmptyOption() }
+            { shouldRenderEmptyOption && renderEmptyOption(emptyOption) }
             { renderOptions({ options }) }
         </MaterialSelect>
     );

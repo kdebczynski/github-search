@@ -6,7 +6,7 @@ import createSagaMiddleware from "redux-saga";
 const ReduxProvider = ({ children, reducer, saga }) => {
     const sagaMiddleware = createSagaMiddleware()
 
-    const composeEnhancers = compose;
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
     const store = createStore(
         reducer,
