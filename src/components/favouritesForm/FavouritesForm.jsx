@@ -3,9 +3,11 @@ import Input from "components/formElements/input/Input";
 import Select from "components/formElements/select/Select";
 import Button from "components/formElements/button/Button";
 import withLabel from "components/formElements/withLabel";
+import style from "./style.scss";
+import uuidv4 from "uuid/v4";
 
-const InputWithLabel = withLabel(Input, { label: "Repo name or description" });
-const SelectWithLabel = withLabel(Select, { label: "Language" });
+const InputWithLabel = withLabel(Input);
+const SelectWithLabel = withLabel(Select);
 
 const initialState = {
     repoOrDescription: {
@@ -67,14 +69,15 @@ class FavouritesForm extends React.Component {
         });
     }
 
-    onAddToListClick = (event) => {
+    onAddToListClick = () => {
         const { repoOrDescription, selectedLanguage, isValid } = this.state;
         const { onSubmit } = this.props;
 
         if (isValid, onSubmit) {
             onSubmit({
+                id: uuidv4(),
                 repoOrDescription: repoOrDescription.value,
-                selectedLanguage: selectedLanguage.value
+                language: selectedLanguage.value
             });
             this.reset();
         }
@@ -88,16 +91,19 @@ class FavouritesForm extends React.Component {
             <div>
                 <InputWithLabel
                     { ...{
-                        defaultValue: repoOrDescription.value,
+                        withLabelClassName: style.formItem,
+                        label: "Repo name or description",
+                        ...( repoOrDescription.isValid !== undefined ? { error: !repoOrDescription.isValid } : {} ),
                         value: repoOrDescription.value,
                         onChange: this.onRepoOrDescriptionChange,
-                        ...( repoOrDescription.isValid !== undefined ? { error: !repoOrDescription.isValid } : {} )
                     } }
                 />
-                <SelectWithLabel 
+                <SelectWithLabel
                     { ...{
+                        withLabelClassName: style.formItem,
                         id: "languages", 
                         name: "languages",
+                        label: "Language",
                         ...( selectedLanguage.isValid !== undefined ? { error: !selectedLanguage.isValid } : {} ),
                         selectedValue: selectedLanguage.value,
                         options,
@@ -105,14 +111,16 @@ class FavouritesForm extends React.Component {
                         autoWidth: true
                     } }  
                 />
-                <Button
-                    { ...{
-                        disabled: !isValid,
-                        onClick:  this.onAddToListClick
-                    } }
-                >
-                    Add To List
-                </Button>
+                <div className={ style.buttonsWrapper }>
+                    <Button
+                        { ...{
+                            disabled: !isValid,
+                            onClick:  this.onAddToListClick
+                        } }
+                    >
+                        Add To List
+                    </Button>
+                </div>
             </div>
         ); 
     }

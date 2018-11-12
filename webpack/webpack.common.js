@@ -1,6 +1,8 @@
 const { srcPath, distPath } = require("./paths.js");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+console.log(srcPath, distPath)
+
 module.exports = () => ({
     entry: [
         srcPath + "/index.js"
@@ -52,8 +54,7 @@ module.exports = () => ({
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: srcPath + '/index.html',
-            filename: './index.html'
+            template: srcPath + '/index.html'
         })
     ]
 });

@@ -1,6 +1,17 @@
 import React from "react";
 import MaterialSelect from '@material-ui/core/Select';
 import MaterialMenuItem from '@material-ui/core/MenuItem';
+import { withStyles } from '@material-ui/core/styles';
+import Input from "components/formElements/input/Input";
+
+const styles = {
+    root: {
+        display: "flex"
+    },
+    selectMenu: {
+        width: "100%"
+    }
+};
 
 const renderOptions = ({ options = [] }) => {
     return options.map(option => (
@@ -35,7 +46,7 @@ const Select = ({
         <MaterialSelect
             value={ selectedValue }
             onChange={ onChange }
-            inputProps={ { name, id } }
+            input={ <Input name={ name } id={ id } /> }
             displayEmpty={ shouldRenderEmptyOption }
             { ...props }
         >
@@ -45,4 +56,4 @@ const Select = ({
     );
 };
 
-export default Select;
+export default withStyles(styles)(Select);

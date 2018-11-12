@@ -1,11 +1,11 @@
 import React from "react";
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-export default (Component, { label, className = "" }) => {
+export default (Component) => {
     
-    const WithLabel = (props) => {
+    const WithLabel = ({ label, withLabelClassName, ...props }) => {
         return (
-            <div className={ className }>
+            <div className={ withLabelClassName }>
                 <FormHelperText>{ label }</FormHelperText>
                 <Component { ...props } />
             </div>

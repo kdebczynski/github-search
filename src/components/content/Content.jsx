@@ -1,11 +1,11 @@
 import React from "react";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import styles from "./content.scss";
+import style from "./style.scss";
 
-const Content = ({ children }) => {
+const Content = ({ children, ...props }) => {
     return (
-        <Card className={ styles.content }>
+        <Card className={ style.content } { ...props }>
             <CardContent>
                 { children }
             </CardContent>
