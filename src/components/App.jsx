@@ -6,7 +6,7 @@ import {
     Route
 } from "react-router-dom";
 import Main from "./pages/main/MainContainer";
-import SearchResults from "./pages/searchResults/SearchResults";
+import SearchResults from "./pages/searchResults/SearchResultsContainer";
 import "css/global.scss";
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
         <Router history={ history } >
             <div>
                 <Route exact path={ routes.MAIN } component={ Main } />
-                <Route exact path={ routes.RESULTS + "/:id" } component={ SearchResults } />
+                <Route exact path={ routes.RESULTS + "/:criteria" } component={ SearchResults } />
             </div>
         </Router>
     );

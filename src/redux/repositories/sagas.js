@@ -5,6 +5,6 @@ export function* repositoriesFetchWatcher () {
     yield takeLatest(actionTypes.REPOSITORIES_FETCH_INITIATED, fetchRepositories);
 }
 
-export function* fetchRepositories() {
-    
+export function* fetchRepositories(action) {
+    console.log(action);
 }

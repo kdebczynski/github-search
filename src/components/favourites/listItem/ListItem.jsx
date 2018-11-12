@@ -12,6 +12,7 @@ const stopPropagation = e => e.stopPropagation();
 const ListItem = ({ favouritesItem, onDeleteClick, onItemClick }) => {
     return (
         <Content
+            className={ style.listItem }
             onClick={ (e) => {
                 stopPropagation(e);
                 onItemClick(favouritesItem);

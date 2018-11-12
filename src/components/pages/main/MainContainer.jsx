@@ -1,9 +1,10 @@
 import { connect } from "react-redux";
 import Main from "./Main";
 import { favouritesAdded } from "redux/favourites/actions";
+import { getLanguages } from "redux/languages/selectors"
 
 const mapStateToProps = (state) => ({
-    options: state.languages
+    options: getLanguages(state)
 });
 
 const dispatchToProps = {
