@@ -1,13 +1,15 @@
 import { connect } from "react-redux";
 import SearchResults from "./SearchResults";
-import { repositoriesFetchInitiated } from "redux/repositories/actions";
+import { repositoriesFetchInitiated, repositoriesFetchMoreInitiated } from "redux/repositories/actions";
+import { isProcessing } from "redux/repositories/selectors";
 
 const mapStateToProps = (state) => ({
-    
+    isProcessing: isProcessing(state)
 });
 
 const dispatchToProps = {
-    onComponentDidMount: (criteria) => repositoriesFetchInitiated(criteria)
+    onSearchTriggered: repositoriesFetchInitiated,
+    onSearchMoreTriggered: repositoriesFetchMoreInitiated
 };
 
 export default connect(

@@ -14,7 +14,7 @@ const App = () => {
         <Router history={ history } >
             <div>
                 <Route exact path={ routes.MAIN } component={ Main } />
-                <Route exact path={ routes.RESULTS + "/:criteria" } component={ SearchResults } />
+                <Route exact path={ routes.RESULTS + "/:favoutites" } component={ SearchResults } />
             </div>
         </Router>
     );

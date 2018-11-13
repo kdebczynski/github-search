@@ -1,14 +1,20 @@
-import { takeLatest, call } from "redux-saga/effects";
+import { takeLatest, call, put } from "redux-saga/effects";
 import { actionTypes } from "./consts";
 import { searchApi } from "api/github/search"
+import { repositoriesFetchSucceeded, repositoriesFetchFailed } from "./actions";
+import { createGithubQueryParams } from "utils/queryParams";
 
 export function* repositoriesFetchWatcher () {
     yield takeLatest(actionTypes.REPOSITORIES_FETCH_INITIATED, fetchRepositories);
 }
 
 export function* fetchRepositories(action) {
-    const criteria = action.payload.criteria;
-    const criteriaApiString = `?q=${criteria.desc}+language:${criteria.lang}&sort=stars&order=desc`;
+    try {
+        const response = yield call(searchApi.repositories, createGithubQueryParams(action.payload.criteria));
 
-    yield call(searchApi.repositories, criteriaApiString);
+        yield put(repositoriesFetchSucceeded(response));
+    } catch (e) {
+        yield put(repositoriesFetchFailed(e.message));
+    }
 }
+

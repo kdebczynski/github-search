@@ -8,10 +8,10 @@ export function* favouritesSearchWatcher () {
 }
 
 export function* searchFavourites(action) {
-    const criteria = JSON.stringify({
+    const favoutites = JSON.stringify({
         desc: action.payload.repoOrDescription,
         lang: action.payload.language
     });
 
-    yield call(history.push, `${routes.RESULTS}/${btoa(criteria)}`);
+    yield call(history.push, `${routes.RESULTS}/${btoa(favoutites)}`);
 }
