@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import ListItem from "../listItem/ListItem";
 
 const List = ({ favourites = [], onDeleteItemClick, onItemClick }) => {
@@ -14,6 +15,12 @@ const List = ({ favourites = [], onDeleteItemClick, onItemClick }) => {
             )) }
         </div>
     );
+};
+
+List.propTypes = {
+    favourites: PropTypes.array,
+    onDeleteItemClick: PropTypes.func,
+    onItemClick: PropTypes.func
 };
 
 export default List;

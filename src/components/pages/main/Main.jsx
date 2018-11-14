@@ -1,24 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Header from "components/header/Header";
-import Content from "components/content/Content";
+import Header from "components/header/HeaderContainer";
+import PageContent from "components/pageContent/PageContent";
+import Card from "components/card/Card";
 import FavouritesForm from "components/favouritesForm/FavouritesForm";
 import FavouritesList from "components/favourites/list/ListContainer";
 
 const Main = ({ onFavouritesAdd, options = [] }) => {
     return (
-        <div>
+        <PageContent>
             <Header title="Search Favoutites" />
-            <Content>
+            <Card>
                 <FavouritesForm
                     { ...{
                         options,
                         onSubmit: onFavouritesAdd
                     } }
                 />
-            </Content>
+            </Card>
             <FavouritesList />
-        </div>
+        </PageContent>
     );
 };
 

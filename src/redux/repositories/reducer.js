@@ -6,29 +6,20 @@ const repositories = (state = notInitiated(), action) => {
         case actionTypes.REPOSITORIES_FETCH_INITIATED:
             return {
                 ...state,
-                ...processing({ reset: true })
-            };
-        case actionTypes.REPOSITORIES_NEXT_PAGE_FETCH_INITIATED:
-            return {
-                ...state,
-                ...processing()
+                ...processing({ reset: !!action.payload.reset })
             };
         case actionTypes.REPOSITORIES_FETCH_SUCCEEDED:
+            const existingItems = state.data && state.data.items && [...state.data.items] || [];
+            const newItems = action.payload && action.payload.items || [];
+
             return {
                 ...state,
-                ...success({ data: action.payload })
-            };
-        case actionTypes.REPOSITORIES_NEXT_PAGE_FETCH_SUCCEEDED:
-            return {
-                ...state,
-                ...success({ data: action.payload })
+                ...success({ data: {
+                    ...action.payload,
+                    items: existingItems.concat(newItems)
+                }})
             };
         case actionTypes.REPOSITORIES_FETCH_FAILED:
-            return {
-                ...state,
-                ...error({ error: action.payload })
-            };
-        case actionTypes.REPOSITORIES_NEXT_PAGE_FETCH_FAILED:
             return {
                 ...state,
                 ...error({ error: action.payload })

@@ -1,5 +1,5 @@
 import React from "react";
-import Content from "components/content/Content";
+import Card from "components/card/Card";
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -10,7 +10,7 @@ const stopPropagation = e => e.stopPropagation();
 
 const ListItem = ({ repositoryItem, onShowMoreClick, onItemClick }) => {
     return (
-        <Content
+        <Card
             className={ style.listItem }
             onClick={ (e) => {
                 stopPropagation(e);
@@ -44,7 +44,7 @@ const ListItem = ({ repositoryItem, onShowMoreClick, onItemClick }) => {
                     <ExpandMore />
                 </IconButton>
             </div>
-        </Content>
+        </Card>
     );
 };
 

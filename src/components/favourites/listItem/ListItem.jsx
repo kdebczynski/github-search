@@ -1,5 +1,6 @@
 import React from "react";
-import Content from "components/content/Content";
+import PropTypes from "prop-types";
+import Card from "components/card/Card";
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -10,7 +11,7 @@ const stopPropagation = e => e.stopPropagation();
 
 const ListItem = ({ favouritesItem, onDeleteClick, onItemClick }) => {
     return (
-        <Content
+        <Card
             className={ style.listItem }
             onClick={ (e) => {
                 stopPropagation(e);
@@ -37,8 +38,14 @@ const ListItem = ({ favouritesItem, onDeleteClick, onItemClick }) => {
                     color="primary"
                 />
             </div>
-        </Content>
+        </Card>
     );
+};
+
+ListItem.propTypes = {
+    favouritesItem: PropTypes.object,
+    onDeleteClick: PropTypes.func,
+    onItemClick: PropTypes.func
 };
 
 export default ListItem;

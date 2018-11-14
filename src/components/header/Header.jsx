@@ -5,11 +5,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import style from "./style.scss";
 
-const Header = ({ title, route }) => {
+const Header = ({ title, route, isProcessing }) => {
     return (
-        <AppBar position="static">
+        <AppBar position="fixed">
             <Toolbar>
                 { route &&
                     <NavLink to={ route }>
@@ -22,6 +23,7 @@ const Header = ({ title, route }) => {
                     { title }
                 </Typography>
             </Toolbar>
+            { isProcessing && <LinearProgress /> }
         </AppBar>
     );
 };

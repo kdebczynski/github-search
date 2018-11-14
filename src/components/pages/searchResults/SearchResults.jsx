@@ -1,10 +1,9 @@
 import React from "react";
-import Header from "components/header/Header";
-import { routes } from "consts";
-import equal from "deep-equal";
+import Header from "components/header/HeaderContainer";
+import PageContent from "components/pageContent/PageContent";
 import RepositoriesList from "components/repositories/list/ListContainer";
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from "components/formElements/button/Button";
+import { routes } from "consts";
 import style from "./style.scss";
 
 class SearchResults extends React.Component {
@@ -12,7 +11,7 @@ class SearchResults extends React.Component {
     state = {
         searchCriteria: {
             q: "",
-            sort: "stargazers_count",
+            sort: "stars",
             order: "desc",
             page: 1,
             per_page: 20
@@ -27,7 +26,7 @@ class SearchResults extends React.Component {
         searchCriteria.q = `${encodedFavoutites.desc}+language:${encodedFavoutites.lang}`;
 
         this.setState({ searchCriteria });
-        this.props.onSearchTriggered({ criteria: searchCriteria });
+        this.props.onSearchTriggered({ criteria: searchCriteria, reset: true });
     }
 
     onLoadMoreClick = () => {
@@ -36,30 +35,30 @@ class SearchResults extends React.Component {
         searchCriteria.page++;
 
         this.setState({ searchCriteria });
-        this.props.onSearchMoreTriggered({ criteria: searchCriteria });
+        this.props.onSearchTriggered({ criteria: searchCriteria });
     }
 
     render() {
-        const { isProcessing } = this.props;
+        const { isProcessing, areDataAvailable } = this.props;
 
         return (
-            <div>
+            <PageContent>
                 <Header
                     title="Search Results"
                     route={ routes.MAIN }
                 />
-                { isProcessing && <LinearProgress /> }
                 <RepositoriesList />
-                { !isProcessing && 
+                { areDataAvailable && 
                     <div className={ style.loadMoreWrapper }>
                         <Button
+                            disabled={ isProcessing }
                             onClick={ this.onLoadMoreClick }
                         >
                             Load More
                         </Button>
                     </div>
                 }
-            </div>
+            </PageContent>
         );
     }
 };

@@ -7,7 +7,7 @@ const List = ({ repositories = [], onItemClick, onShowMoreClick }) => {
         <div>
             { repositories && repositories.map(item => (
                 <ListItem
-                    key={ item.id }
+                    key={ item.node_id }
                     repositoryItem={ item }
                     onItemClick= { onItemClick }
                     onShowMoreClick={ onShowMoreClick }
