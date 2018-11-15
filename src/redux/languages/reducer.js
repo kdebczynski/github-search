@@ -1,15 +1,15 @@
-import languages from "data/languages";
+import languagesData from "data/languages";
 
-const defaultState = Object.keys(languages).map(langKey => ({
+const defaultState = Object.keys(languagesData).map(langKey => ({
     value: langKey,
-    name: languages[langKey]
+    name: languagesData[langKey]
 }));
 
-const favourites = (state = defaultState, action) => {
+const languages = (state = defaultState, action) => {
     switch (action.type) {
         default:
             return state;
     }
 };
 
-export default favourites;
+export default languages;

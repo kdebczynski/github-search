@@ -1,9 +1,8 @@
 const { srcPath, distPath } = require("./paths.js");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-console.log(srcPath, distPath)
-
-module.exports = () => ({
+module.exports = ({ analyze = false } = {}) => ({
     entry: [
         srcPath + "/index.js"
     ],
@@ -55,6 +54,7 @@ module.exports = () => ({
     plugins: [
         new HtmlWebpackPlugin({
             template: srcPath + '/index.html'
-        })
+        }),
+        ...(analyze ? [new BundleAnalyzerPlugin()] : [])
     ]
 });
