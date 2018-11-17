@@ -7,7 +7,7 @@
     "test": "jest --colors --config ./jest-config.js",
     "build": "webpack --config ./webpack/webpack.prod.js",
     "serve:dev": "webpack-dev-server --config ./webpack/webpack.dev.js",
-    "serve:prod": "webpack-dev-server --config ./webpack/webpack.prod.js"
+    "serve:prod": "webpack-dev-server --config ./webpack/webpack.prod-serve.js"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,9 @@
+export const publicPath = `${WEBPACK_PUBLIC_PATH}` || "./";
+
+
 export const routes = {
-    MAIN: "/",
-    RESULTS: "/results"
+    MAIN: `${publicPath}`,
+    RESULTS: `${publicPath}results`
 };
 
 export const urls = {

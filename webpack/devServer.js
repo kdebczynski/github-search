@@ -1,5 +1,5 @@
-module.exports = {
-    contentBase: "/",
-    publicPath: "/",
+module.exports = ({ publicPath = "/" } = {}) => ({
+    contentBase: publicPath,
+    publicPath,
     historyApiFallback: true
-};
+});
