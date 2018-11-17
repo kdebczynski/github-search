@@ -10,8 +10,9 @@ const repositories = (state = notInitiated(), action) => {
             };
         case actionTypes.REPOSITORY_LANGULAGES_FETCH_SUCCEEDED:
             const existingItems = state.data && [...state.data] || [];
+            const isAlreadyExist = existingItems.some(item => item.repoId === action.payload.repoId);
 
-            existingItems.push(action.payload);
+            !isAlreadyExist && existingItems.push(action.payload);
 
             return {
                 ...state,
