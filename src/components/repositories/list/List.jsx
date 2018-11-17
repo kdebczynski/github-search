@@ -1,10 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 import ListItem from "../listItem/ListItem";
 
 const getRepositoryLanguagesItemByRepoId = (repositoryLanguages, repoId) => {
-    return repositoryLanguages.find(item => {
-        return item.repoId === repoId;
-    });
+    return repositoryLanguages.find(item => item.repoId === repoId);
 };
 
 const List = ({ repositories = [], repositoryLanguages = [], onItemClick, onShowMoreClick }) => {
@@ -24,6 +23,13 @@ const List = ({ repositories = [], repositoryLanguages = [], onItemClick, onShow
             )) }
         </div>
     );
+};
+
+List.propTypes = {
+    repositories: PropTypes.array,
+    repositoryLanguages: PropTypes.array,
+    onItemClick: PropTypes.func,
+    onShowMoreClick: PropTypes.func
 };
 
 export default List;

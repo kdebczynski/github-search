@@ -18,3 +18,10 @@ export function* fetchRepositories(action) {
     }
 }
 
+export function* repositoryRedirectWatcher () {
+    yield takeLatest(actionTypes.REPOSITORY_REDIRECT, repositoryRedirect);
+}
+
+export function* repositoryRedirect(action) {
+    yield call(window.open, action.payload.url, "_blank");
+}

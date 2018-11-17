@@ -13,7 +13,7 @@ const Main = ({ onFavouritesAdd, options = [] }) => {
             <Card>
                 <FavouritesForm
                     { ...{
-                        options,
+                        languageOptions: options,
                         onSubmit: onFavouritesAdd
                     } }
                 />

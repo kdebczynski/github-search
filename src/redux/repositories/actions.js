@@ -13,5 +13,5 @@ export const repositoriesFetchFailed = (error) => (
 );
 
 export const repositoryRedirect = (url) => (
-    { type: actionTypes.REPOSITORY_REDIRECT, payload: url }
+    { type: actionTypes.REPOSITORY_REDIRECT, payload: { url } }
 );

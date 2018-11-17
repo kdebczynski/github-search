@@ -1,14 +1,42 @@
 .listItem {
+    position: relative;
     cursor: pointer;
     margin: 10px;
-}
 
-.listHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    &:hover, &.deleteAreaShown {
+        .deleteArea {
+            width: 50%;
+        }
+    }
 
-.listTools{
-    margin: 10px 0 0 0;
+    .listHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .listTools {
+        margin: 10px 0 0 0;
+    }
+
+    .deleteArea {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 0;
+        background-color: #2196f3;
+        text-align: center;
+        transition: width 0.5s;
+
+        .deleteButton {
+            width: 100%;
+
+            .deleteIcon, .deleteLabel {
+                color: #fff;
+            }
+        }
+    }
 }

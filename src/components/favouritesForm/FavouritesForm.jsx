@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Input from "components/formElements/input/Input";
 import Select from "components/formElements/select/Select";
 import Button from "components/formElements/button/Button";
@@ -85,7 +86,7 @@ class FavouritesForm extends React.Component {
 
     render() {
         const { repoOrDescription, selectedLanguage, isValid } = this.state;
-        const { options } = this.props;
+        const { languageOptions } = this.props;
 
         return (
             <div>
@@ -106,7 +107,7 @@ class FavouritesForm extends React.Component {
                         label: "Language",
                         ...( selectedLanguage.isValid !== undefined ? { error: !selectedLanguage.isValid } : {} ),
                         selectedValue: selectedLanguage.value,
-                        options,
+                        options: languageOptions,
                         onChange: this.onLanguageChange,
                         autoWidth: true
                     } }  
@@ -124,6 +125,11 @@ class FavouritesForm extends React.Component {
             </div>
         ); 
     }
+}
+
+FavouritesForm.propTypes = {
+    languageOptions: PropTypes.array,
+    onSubmit: PropTypes.func.isRequired
 }
 
 export default FavouritesForm;

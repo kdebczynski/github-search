@@ -1,11 +1,11 @@
-import { takeLatest, call, put, select } from "redux-saga/effects";
+import { takeEvery, call, put, select } from "redux-saga/effects";
 import { actionTypes } from "./consts";
 import { repositoriesApi } from "api/github/repositories"
 import { repositoryLanguagesFetchSucceeded, repositoryLanguagesFetchFailed } from "./actions";
 import { findByRepoId } from "./selectors";
 
 export function* repositoryLanguagesFetchWatcher () {
-    yield takeLatest(actionTypes.REPOSITORY_LANGULAGES_FETCH_INITIATED, fetchRepositoryLanguages);
+    yield takeEvery(actionTypes.REPOSITORY_LANGULAGES_FETCH_INITIATED, fetchRepositoryLanguages);
 }
 
 export function* fetchRepositoryLanguages(action) {

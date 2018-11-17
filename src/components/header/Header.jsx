@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -27,5 +28,11 @@ const Header = ({ title, route, isProcessing }) => {
         </AppBar>
     );
 };
+
+Header.propTypes = {
+    title: PropTypes.string,
+    route: PropTypes.string,
+    isProcessing: PropTypes.bool
+}
 
 export default Header;

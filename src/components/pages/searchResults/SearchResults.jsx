@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Header from "components/header/HeaderContainer";
 import PageContent from "components/pageContent/PageContent";
 import RepositoriesList from "components/repositories/list/ListContainer";
@@ -62,5 +63,11 @@ class SearchResults extends React.Component {
         );
     }
 };
+
+SearchResults.propTypes = {
+    isProcessing: PropTypes.bool,
+    areDataAvailable: PropTypes.bool,
+    onSearchTriggered: PropTypes.func.isRequired
+}
 
 export default SearchResults;
