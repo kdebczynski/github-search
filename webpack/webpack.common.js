@@ -15,7 +15,7 @@ module.exports = ({ analyze = false, publicPath = "/" } = {}) => {
         },
         resolve: {
             modules: [
-                "src",
+                srcPath,
                 "node_modules"
             ],
             extensions: [

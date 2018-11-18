@@ -1,6 +1,6 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 import { actionTypes } from "./consts";
-import { searchApi } from "api/github/search"
+import { searchApi } from "api/github/search";
 import { repositoriesFetchSucceeded, repositoriesFetchFailed } from "./actions";
 import { createQueryParams } from "utils/queryParams";
 

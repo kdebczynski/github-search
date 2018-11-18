@@ -1,5 +1,10 @@
 # Github repository search
 
+## TODO:
+* Linter for js and css
+* RWD for desktop
+* Write more Unit Test - I did not have time to write tests for all modules ;(
+
 ### Setup environment
 
 You need to have installed node js with npm.
@@ -15,6 +20,8 @@ Then open browser and type address: `http://localhost:8080/`
 ### Running project in production mode
 
 `npm run serve:prod`
+
+Then open browser and type address: `http://localhost:8080/`
 
 ### Running project with public IP
 
@@ -34,8 +41,4 @@ Bundle package will be avaialble in `dist` directory
 
 ### Running bundle analyzer
 
-`npm run build --env.analyze=true`
-
-## TODO:
-* Linter for js and css
-* Write more Unit Test ;)
+`npm run build -- --env.analyze=true`
