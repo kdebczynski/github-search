@@ -1,10 +1,5 @@
 # Github repository search
 
-## TODO:
-* Linter for js and css
-* RWD for desktop
-* Write more Unit Test - I did not have time to write tests for all modules ;(
-
 ### Setup environment
 
 You need to have installed node js with npm.
