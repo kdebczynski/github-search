@@ -1,22 +1,26 @@
 import request from "utils/request";
-import notify from "utils/notify";
 
-const hasMessageEventListenerRegistered = false;
+async function getSwRegistration() {
+  return navigator.serviceWorker.ready;
+}
 
-async function backgroundSync(reqKey) {
-  return new Promise((resolve, reject) => {
-    if (!hasMessageEventListenerRegistered) {
-      navigator.serviceWorker.addEventListener('message', (event) => {
-        if (reqKey === event.data.reqKey) {
-          resolve(event.data);
-        }
-      });
-    }
-
-    navigator.serviceWorker.ready.then(registration => {
-      return registration.sync.register(reqKey);
-    });
+function getDataFromBackgroundSyncByTag(reqTag) {
+  return new Promise(async (resolve) => {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (reqTag === event.data.reqTag) {
+        resolve(event.data);
+      }
+    }, { once: true });
   });
+}
+
+async function backgroundSync(url, method) {
+  const reqTag = `${method}:${url}`;
+  const registration = await getSwRegistration();
+  
+  registration.sync.register(reqTag);
+
+  return await getDataFromBackgroundSyncByTag(reqTag);
 }
 
 async function getSyncData(url, config) {
@@ -24,12 +28,7 @@ async function getSyncData(url, config) {
 
   // background sync - only basic GET request available without any config (for demo)
   if (isGetRequest) {
-    notify(`Background sync have been started for ${url}`);
-
-    const prefix = 'GET';
-    const { data } = await backgroundSync(`${prefix}:${url}`);
-
-    notify(`Background sync finished with success for ${url}`);
+    const { data } = await backgroundSync(url, 'GET');
 
     // compability with fetch api
     return {

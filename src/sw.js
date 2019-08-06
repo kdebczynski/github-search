@@ -11,7 +11,7 @@ const STATIC_ASSETS = [
 self.addEventListener('install', (event) => {
   console.log('install');
 
-  // skip waiting after install for previous sw to be unactivated and progress into the activating state
+  // forces the waiting service worker to become the active service worker.
   self.skipWaiting();
 
   // delay install by caching assets and open database
@@ -21,6 +21,9 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   console.log('activate');
 
+  // allows an active service worker to set itself as the controller for all clients within its scope.
+  self.clients.claim();
+
   // remove old cache and then cache new static assets
   event.waitUntil(caches.delete(CACHE_NAME).then(cacheStaticAssets));
 });
@@ -29,7 +32,7 @@ self.addEventListener('fetch', (event) => {
   console.log('fetch');
 
   // respond from cache first
-  event.respondWith(fetchFromCacheFirst(event.request));
+  event.respondWith(fetchFromNetworkFirst(event.request));
 });
 
 self.addEventListener('push', () => {
@@ -55,9 +58,9 @@ self.addEventListener('sync', (event) => {
 
           const data = await response.json();
 
-          console.log(data)
+          self.registration.showNotification(`Background sync finished with success`);
 
-          return sendMessageToAllClients({reqKey: tag, data});
+          return sendMessageToAllClients({reqTag: tag, data});
         })
         .catch(err => {
           if (event.lastChance) {
@@ -70,9 +73,9 @@ self.addEventListener('sync', (event) => {
 });
 
 async function fetchFromCacheFirst(request) {
-  const matching = await fromCache(request);
+  const responseFromCache = await fromCache(request);
 
-  if (!matching) {
+  if (!responseFromCache) {
     const response = await fromNetwork(request);
 
     await updateCache(request, response.clone());
@@ -80,7 +83,25 @@ async function fetchFromCacheFirst(request) {
     return response;
   }
 
-  return matching;
+  return responseFromCache;
+}
+
+async function fetchFromNetworkFirst(request) {
+  try {
+    const response =  await fromNetwork(request);
+
+    await updateCache(request, response.clone());
+
+    return response;
+  } catch(e) {
+    const responseFromCache = await fromCache(request);
+
+    if (responseFromCache) {
+      return responseFromCache;
+    } else {
+      throw e;
+    }
+  }
 }
 
 function cacheStaticAssets() {
