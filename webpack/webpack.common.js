@@ -2,6 +2,7 @@ const { srcPath, distPath } = require("./paths.js");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const webpack = require("webpack");
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = ({ analyze = false, publicPath = "/" } = {}) => {
     return {
@@ -60,7 +61,15 @@ module.exports = ({ analyze = false, publicPath = "/" } = {}) => {
             new webpack.DefinePlugin({
                 WEBPACK_PUBLIC_PATH: JSON.stringify(publicPath)
             }),
-            ...(analyze ? [new BundleAnalyzerPlugin()] : [])
+            ...(analyze ? [new BundleAnalyzerPlugin()] : []),
+            new CopyPlugin(
+                [
+                    { from: 'src/assets', to: 'assets' },
+                    'src/manifest.json',
+                    'src/sw.js'
+                ],
+                { ignore: ['.DS_Store'] }
+            )
         ]
     };
 };

@@ -1,0 +1,22 @@
+{
+  "short_name": "Github Search",
+  "name": "Github search",
+  "icons": [
+    {
+      "src": "/assets/github-logo-128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/assets/github-logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#2196f3",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#2196f3",
+  "serviceworker": { "src": "/sw.js" }
+}
