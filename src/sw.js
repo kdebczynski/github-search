@@ -8,6 +8,14 @@ const STATIC_ASSETS = [
   './manifest.json'
 ];
 
+function parseJson(str) {
+  try {
+    return JSON.parse(str);
+  } catch(e) {
+    return undefined;
+  }
+}
+
 self.addEventListener('install', (event) => {
   console.log('install');
 
@@ -42,25 +50,36 @@ self.addEventListener('push', () => {
   // whether or not the web app is in the foreground, or even currently loaded, on a user agent.
 });
 
+self.addEventListener('notificationclick', function (event) {
+  console.log('notificationclick');
+
+  event.notification.close();
+  clients.openWindow(event.notification.data.link);
+});
+
 self.addEventListener('sync', (event) => {
   console.log('sync');
 
-  const tag = event.tag;
-  const [method, ...rest] = tag.split(':');
+  const recievedJsonTag = parseJson(event.tag);
 
-  if (method === 'GET') {
-    const url = rest.join(':');
+  if (recievedJsonTag && recievedJsonTag.type === 'fetch-sync') {
+    const url = recievedJsonTag.url;
 
     event.waitUntil(
       fetch(url)
         .then(async (response) => {
+          const headers = {};
+          response.headers.forEach((val, key) => {
+            headers[key] = val;
+          })
+
           await updateCache(url, response.clone());
 
           const data = await response.json();
 
-          self.registration.showNotification(`Background sync finished with success`);
+          self.registration.showNotification(`Background sync finished with success`, { data: { link: recievedJsonTag.link } });
 
-          return sendMessageToAllClients({reqTag: tag, data});
+          return sendMessageToAllClients({ jsonTag: event.tag, data, headers });
         })
         .catch(err => {
           if (event.lastChance) {

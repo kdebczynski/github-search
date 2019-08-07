@@ -1,8 +1,8 @@
 import { endpoints } from "consts";
 import request from "utils/request";
-import requestWithSync from "utils/request";
+import requestWithBackgroundSync from "utils/requestWithBackgroundSync";
 
 export const repositoriesApi = {
-    languages: ({ owner, repo }) => requestWithSync(endpoints.github.search.languages({ owner, repo }))
+    languages: ({ owner, repo }) => requestWithBackgroundSync(endpoints.github.search.languages({ owner, repo }))
         .then(response => response.json())
 };
