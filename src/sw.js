@@ -1,6 +1,6 @@
 const CACHE_NAME = 'cache-and-update';
 const STATIC_ASSETS = [
-  './index.html',
+  './',
   './index.bundle.js',
   './assets/',
   './assets/github-logo-128.png',
