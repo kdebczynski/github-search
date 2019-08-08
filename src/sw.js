@@ -67,28 +67,30 @@ self.addEventListener('sync', (event) => {
     const { url, bodyExtractMethodName, config } = recievedJsonTag;
 
     event.waitUntil(
-      fetch(url, config)
-        .then(async (response) => {
+      (async function () {
+        try {
+          const response = await fetch(url, config);
+  
           const headers = {};
           response.headers.forEach((val, key) => {
             headers[key] = val;
           })
-
+  
           await updateCache(url, response.clone());
-
+  
           // extact data from body by recieved method name
           const data = await extractDataFromResponse(response, bodyExtractMethodName);
-
+  
           self.registration.showNotification(`Background sync finished with success`, { data: { link: recievedJsonTag.link } });
-
+  
           return sendMessageToAllClients({ jsonTag: event.tag, data, headers });
-        })
-        .catch(err => {
+        } catch(e) {
           if (event.lastChance) {
             self.registration.showNotification(`Can't get ${url}`);
           }
           throw err;
-        })
+        }
+      })()
     );
   }
 });

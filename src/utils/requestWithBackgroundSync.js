@@ -2,12 +2,8 @@ import request from "utils/request";
 import parseJson from "utils/parseJson";
 import uuidv4 from "uuid/v4";
 
-async function getSwRegistration() {
-  return navigator.serviceWorker.ready;
-}
-
 async function registerBackgroundSync(tag) {
-  const registration = await getSwRegistration();
+  const registration = await navigator.serviceWorker.ready;
 
   registration.sync.register(tag);
 }
