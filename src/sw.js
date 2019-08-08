@@ -7,6 +7,7 @@ const STATIC_ASSETS = [
   './assets/github-logo-512.png',
   './manifest.json'
 ];
+const BODY_EXTRACT_METHOD_NAMES = ['arrayBuffer', 'blob', 'json', 'text', 'formData'];
 
 function parseJson(str) {
   try {
@@ -63,10 +64,10 @@ self.addEventListener('sync', (event) => {
   const recievedJsonTag = parseJson(event.tag);
 
   if (recievedJsonTag && recievedJsonTag.type === 'fetch-sync') {
-    const url = recievedJsonTag.url;
+    const { url, bodyExtractMethodName, config } = recievedJsonTag;
 
     event.waitUntil(
-      fetch(url)
+      fetch(url, config)
         .then(async (response) => {
           const headers = {};
           response.headers.forEach((val, key) => {
@@ -75,7 +76,8 @@ self.addEventListener('sync', (event) => {
 
           await updateCache(url, response.clone());
 
-          const data = await response.json();
+          // extact data from body by recieved method name
+          const data = await extractDataFromResponse(response, bodyExtractMethodName);
 
           self.registration.showNotification(`Background sync finished with success`, { data: { link: recievedJsonTag.link } });
 
@@ -90,6 +92,14 @@ self.addEventListener('sync', (event) => {
     );
   }
 });
+
+async function extractDataFromResponse(response, methodName) {
+  if (BODY_EXTRACT_METHOD_NAMES.includes(methodName)) {
+    return response[methodName]();
+  }
+
+  throw new Error(`Can't extract data from response body by method ${methodName}`);
+}
 
 async function fetchFromCacheFirst(request) {
   const responseFromCache = await fromCache(request);

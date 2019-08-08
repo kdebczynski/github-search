@@ -1,5 +1,6 @@
 import request from "utils/request";
 import parseJson from "utils/parseJson";
+import uuidv4 from "uuid/v4";
 
 async function getSwRegistration() {
   return navigator.serviceWorker.ready;
@@ -11,11 +12,17 @@ async function registerBackgroundSync(tag) {
   registration.sync.register(tag);
 }
 
-function createFetchSyncDataObj(url, method) {
+function createFetchSyncDataObj(url, config) {
+  // method name used to extact data from body by service worker
+  // TODO: detect method name by "Content-Type" header
+  const bodyExtractMethodName = 'json';
+
   return {
     type: 'fetch-sync',
-    method,
+    requestId: uuidv4(),
     url,
+    config,
+    bodyExtractMethodName,
     link: document.location.href
   };
 }
@@ -32,11 +39,10 @@ function createFetchSyncMessageListener(jsonTag, done) {
     const recievedJsonTag = parseJson(event.data.jsonTag);
 
     if (recievedJsonTag) {
-      const isFetchSyncMatch = jsonTag.type === 'fetch-sync'
-        && jsonTag.url === recievedJsonTag.url
-        && jsonTag.method === recievedJsonTag.method;
+      const isFetchSyncMessage = recievedJsonTag.type === 'fetch-sync';
+      const isTheSameRequestId = jsonTag.requestId = recievedJsonTag.requestId;
 
-      if (isFetchSyncMatch) {
+      if (isFetchSyncMessage && isTheSameRequestId) {
         done(event.data);
       }
     }
@@ -61,22 +67,15 @@ function getDataFromBackgroundSyncByJsonTag(jsonTag) {
 }
 
 async function backgroundSyncRequest(url, config) {
-  const isGetRequest = !config || (config && config.method === 'GET');
+  // data that are passed to sync event
+  const jsonTag = createFetchSyncDataObj(url, config);
 
-  // background sync experiment - only basic GET request available without any config like headers etc.
-  if (isGetRequest) {
-    const jsonTag = createFetchSyncDataObj(url, 'GET');
+  await registerBackgroundSync(JSON.stringify(jsonTag));
 
-    await registerBackgroundSync(JSON.stringify(jsonTag));
+  // background sync data recieve experiment
+  const { data, headers } = await getDataFromBackgroundSyncByJsonTag(jsonTag);
 
-    // background sync data recieve experiment
-    const { data, headers } = await getDataFromBackgroundSyncByJsonTag(jsonTag);
-    const response = prepareResponse(data, headers);
-
-    return response;
-  } else {
-    throw new Error('Fetch failed');
-  }
+  return prepareResponse(data, headers);
 }
 
 function requestWithBackgroundSync(url, config) {
