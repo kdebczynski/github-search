@@ -9,14 +9,6 @@ const STATIC_ASSETS = [
 ];
 const BODY_EXTRACT_METHOD_NAMES = ['arrayBuffer', 'blob', 'json', 'text', 'formData'];
 
-function parseJson(str) {
-  try {
-    return JSON.parse(str);
-  } catch(e) {
-    return undefined;
-  }
-}
-
 self.addEventListener('install', (event) => {
   console.log('install');
 
@@ -42,20 +34,6 @@ self.addEventListener('fetch', (event) => {
 
   // respond from cache first
   event.respondWith(fetchFromNetworkFirst(event.request));
-});
-
-self.addEventListener('push', () => {
-  console.log('push');
-
-  // The Push API gives web applications the ability to receive messages pushed to them from a server,
-  // whether or not the web app is in the foreground, or even currently loaded, on a user agent.
-});
-
-self.addEventListener('notificationclick', function (event) {
-  console.log('notificationclick');
-
-  event.notification.close();
-  clients.openWindow(event.notification.data.link);
 });
 
 self.addEventListener('sync', (event) => {
@@ -94,6 +72,40 @@ self.addEventListener('sync', (event) => {
     );
   }
 });
+
+// push api
+self.addEventListener('push', () => {
+  console.log('push');
+
+  // The Push API gives web applications the ability to receive messages pushed to them from a server,
+  // whether or not the web app is in the foreground, or even currently loaded, on a user agent.
+});
+
+self.addEventListener('notificationclick', function (event) {
+  console.log('notificationclick');
+
+  event.notification.close();
+  clients.openWindow(event.notification.data.link);
+});
+// --------
+
+// background fetch
+self.addEventListener('backgroundfetchsuccess', (event) => {
+  console.log('backgroundfetchsuccess', event)
+});
+
+self.addEventListener('backgroundfetchfail', (event) => {
+  console.log('backgroundfetchfail', event)
+});
+
+self.addEventListener('backgroundfetchabort', (event) => {
+  console.log('backgroundfetchabort', event)
+});
+
+self.addEventListener('backgroundfetchclick', (event) => {
+  console.log('backgroundfetchclick', event)
+});
+// ---------------
 
 async function extractDataFromResponse(response, methodName) {
   if (BODY_EXTRACT_METHOD_NAMES.includes(methodName)) {
@@ -156,4 +168,12 @@ function sendMessageToAllClients(msg) {
     .then(clients => {
       clients.forEach(client => client.postMessage(msg))
     });
+}
+
+function parseJson(str) {
+  try {
+    return JSON.parse(str);
+  } catch(e) {
+    return undefined;
+  }
 }
