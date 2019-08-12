@@ -24,7 +24,7 @@ const App = () => {
             <Router history={ history } >
                 <div>
                     <Route exact path={ routes.MAIN } component={ Main } />
-                    <Route exact path={ routes.RESULTS + "/:favoutites" } component={ SearchResults } />
+                    <Route exact path={ routes.RESULTS } component={ SearchResults } />
                 </div>
             </Router>
         </MuiThemeProvider>

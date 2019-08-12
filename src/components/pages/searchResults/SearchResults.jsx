@@ -6,6 +6,7 @@ import RepositoriesList from "components/repositories/list/ListContainer";
 import Button from "components/formElements/button/Button";
 import { routes } from "consts";
 import style from "./style.scss";
+import { parseQueryParams } from "utils/queryParams";
 
 class SearchResults extends React.Component {
 
@@ -20,8 +21,7 @@ class SearchResults extends React.Component {
     }
 
     componentDidMount() {
-        const favoutites = this.props.match.params.favoutites;
-        const encodedFavoutites = JSON.parse(atob(favoutites));
+        const encodedFavoutites = parseQueryParams(this.props.location.search);
         let searchCriteria = { ...this.state.searchCriteria };
 
         searchCriteria.q = `${encodedFavoutites.desc}+language:${encodedFavoutites.lang}`;
