@@ -1,6 +1,7 @@
 const CACHE_NAME = 'cache-and-update';
 const STATIC_ASSETS = [
   './',
+  './index.html',
   './index.bundle.js',
   './assets/',
   './assets/github-logo-128.png',
@@ -33,7 +34,20 @@ self.addEventListener('fetch', (event) => {
   console.log('fetch');
 
   // respond from cache first
-  event.respondWith(fetchFromNetworkFirst(event.request));
+  event.respondWith((async function() {
+    try {
+      const response = await fetchFromNetworkFirst(event.request);
+  
+      return response;
+    } catch(e) {
+      // fallback for navigate requests
+      if (event.request.mode === 'navigate') {
+        return getCachedIndex();
+      }
+
+      throw e;
+    }
+  })());
 });
 
 self.addEventListener('sync', (event) => {
@@ -66,7 +80,7 @@ self.addEventListener('sync', (event) => {
           if (event.lastChance) {
             self.registration.showNotification(`Can't get ${url}`);
           }
-          throw err;
+          throw e;
         }
       })()
     );
@@ -145,6 +159,10 @@ async function fetchFromNetworkFirst(request) {
       throw e;
     }
   }
+}
+
+function getCachedIndex() {
+  return caches.open(CACHE_NAME).then((cache) => cache.match('index.html'));
 }
 
 function cacheStaticAssets() {
