@@ -24,6 +24,7 @@ function createFetchSyncDataObj(url, config) {
 }
 
 function prepareResponse(data, headers) {
+  // TODO: build blob bases on "Content-Type" header (for now json is created)
   const blob = new Blob([JSON.stringify(data)]);
   const response = new Response(blob, { headers });
 
