@@ -56,7 +56,8 @@ module.exports = ({ analyze = false, publicPath = "/" } = {}) => {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                template: srcPath + '/index.html'
+                template: srcPath + '/index.html',
+                WEBPACK_PUBLIC_PATH: publicPath
             }),
             new webpack.DefinePlugin({
                 WEBPACK_PUBLIC_PATH: JSON.stringify(publicPath)
