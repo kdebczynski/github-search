@@ -35,23 +35,14 @@ self.addEventListener('fetch', (event) => {
 
   // respond from cache first
   event.respondWith((async function() {
-    try {
-      // fallback for navigate requests
-      if (event.request.mode === 'navigate') {
-        return getCachedIndex();
-      }
-
-      const response = await fetchFromNetworkFirst(event.request);
-
-      return response;
-    } catch(e) {
-      // fallback for navigate requests
-      if (event.request.mode === 'navigate') {
-        return getCachedIndex();
-      }
-
-      throw e;
+    // fallback for navigate requests
+    if (event.request.mode === 'navigate') {
+      return getCachedIndex();
     }
+
+    const response = await fetchFromNetworkFirst(event.request);
+
+    return response;
   })());
 });
 
