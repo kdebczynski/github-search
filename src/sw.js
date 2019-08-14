@@ -36,12 +36,12 @@ self.addEventListener('fetch', (event) => {
   // respond from cache first
   event.respondWith((async function() {
     try {
-      const response = await fetchFromNetworkFirst(event.request);
-
       // fallback for navigate requests
-      if (event.request.mode === 'navigate' && response.status === 404) {
+      if (event.request.mode === 'navigate') {
         return getCachedIndex();
       }
+
+      const response = await fetchFromNetworkFirst(event.request);
 
       return response;
     } catch(e) {
