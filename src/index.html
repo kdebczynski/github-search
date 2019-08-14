@@ -12,7 +12,10 @@
 
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('<%= htmlWebpackPlugin.options.WEBPACK_PUBLIC_PATH %>sw.js', { scope: '/' })
+            navigator.serviceWorker.register(
+                '<%= htmlWebpackPlugin.options.WEBPACK_PUBLIC_PATH %>sw.js',
+                { scope: '<%= htmlWebpackPlugin.options.WEBPACK_PUBLIC_PATH %>' }
+            )
             .then((reg) => {
                 console.log('Registration succeeded. Scope is ' + reg.scope);
                 Notification.requestPermission();
