@@ -40,7 +40,6 @@ module.exports = ({ analyze = false, publicPath = "/" } = {}) => {
                             loader: "css-loader",
                             options: {
                                 modules: true,
-                                localIdentName: "[local]___[hash:base64:5]"
                             }
                         },
                         {
@@ -50,7 +49,7 @@ module.exports = ({ analyze = false, publicPath = "/" } = {}) => {
                 },
                 {
                     test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
-                    loaders: ["file-loader"]
+                    use: ["file-loader"]
                 }
             ]
         },

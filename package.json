@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest --colors --config ./jest-config.js",
     "build": "webpack --config ./webpack/webpack.prod.js",
-    "serve:dev": "webpack-dev-server --config ./webpack/webpack.dev.js",
-    "serve:prod": "webpack-dev-server --config ./webpack/webpack.prod-serve.js"
+    "serve:dev": "webpack serve --config ./webpack/webpack.dev.js",
+    "serve:prod": "webpack serve --config ./webpack/webpack.prod-serve.js"
   },
   "repository": {
     "type": "git",
@@ -45,28 +45,28 @@
     "babel-jest": "^24.8.0",
     "babel-loader": "~8.0.4",
     "copy-webpack-plugin": "^5.0.4",
-    "css-loader": "~1.0.1",
+    "css-loader": "^5.2.1",
     "enzyme": "~3.7.0",
     "enzyme-adapter-react-16": "~1.7.0",
     "enzyme-matchers": "~7.0.1",
     "enzyme-to-json": "~3.3.4",
-    "file-loader": "~2.0.0",
-    "html-webpack-plugin": "~3.2.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.1",
     "identity-obj-proxy": "~3.0.0",
     "jest": "^24.8.0",
     "jest-enzyme": "~7.0.1",
     "jest-extended": "^0.11.2",
     "jest-fetch-mock": "^1.7.4",
-    "node-sass": "~4.10.0",
+    "node-sass": "^5.0.0",
     "path": "~0.12.7",
     "react-test-renderer": "~16.6.3",
     "regenerator-runtime": "~0.13.1",
-    "sass-loader": "~7.1.0",
-    "style-loader": "~0.23.1",
-    "webpack": "~4.25.1",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.32.0",
     "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-cli": "~3.1.2",
-    "webpack-dev-server": "^3.1.14",
-    "webpack-merge": "~4.1.4"
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
   }
 }
